@@ -1,7 +1,7 @@
 'use client';
 import useConversation from '@/app/hooks/useConversation';
 import axios from 'axios';
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { IoAttachOutline } from 'react-icons/io5';
 import { toast } from 'react-hot-toast';
@@ -18,7 +18,7 @@ const Form = () => {
         }
     });
 
-    const onSubmit: SubmitHandler<FieldValues> = useCallback(async (data) => {
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         try {
             setValue('message', '', { shouldValidate: true });
             await axios.post('/api/messages', {
@@ -28,9 +28,9 @@ const Form = () => {
         } catch (error) {
             toast.error('Failed to send message');
         }
-    }, [conversationId, setValue]);
+    }
 
-    const handleUpload = useCallback(async (result: any) => {
+    const handleUpload = async (result: any) => {
         const fileInfo = result?.info;
         if (fileInfo && fileInfo.format) {
             const acceptedFormats = ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'webp'];
@@ -49,14 +49,14 @@ const Form = () => {
         } else {
             toast.error('An error occurred while uploading the file.');
         }
-    }, [conversationId]);
+    }
 
-    const handleKeyDown = useCallback((e: any) => {
+    const handleKeyDown = (e: any) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSubmit(onSubmit)();
         }
-    }, [handleSubmit, onSubmit]);
+    };
 
     return (
         <div className="chat-footer border-top py-4 py-lg-6 px-lg-8">
