@@ -1,0 +1,24 @@
+@media (min-width: 769px) {
+    .sidebar {
+        height: 100% !important;
+        // width: 100% !important;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    /* Ensure starting state is transparent */
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-fill-mode: forwards;
+    /* Keep final state of the animation */
+}

@@ -1,0 +1,24 @@
+.chat-body {
+    .chat-content {
+        .container-xxl {
+            .message.message-right {
+
+                @media (max-width: 575px) {
+                    margin-left: 50px;
+                }
+
+                @media (min-width: 575px) and (max-width: 992px) {
+                    margin-left: 70px;
+                }
+            }
+
+            .text-break {
+
+                .mark,
+                mark {
+                    padding: 0;
+                }
+            }
+        }
+    }
+}

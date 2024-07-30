@@ -1,0 +1,40 @@
+.title {
+    background-image: linear-gradient(30deg, #25262b 20%, rgba(50, 52, 65, .8) 50%, #25262b 80%);
+    background-color: #fff;
+    background-size: 600% 100%;
+    background-repeat: no-repeat;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    text-align: center;
+    font-family: sans-serif, system-ui, -apple-system, BlinkMacSystemFont;
+    animation: gradient 15s ease infinite;
+}
+
+#image-login {
+    width: 90px;
+    height: 90px;
+    background-image: linear-gradient(30deg, #2e78ef 20%, rgba(39, 56, 165, 0.832) 50%, #0176ff 80%);
+    background-color: #3b58bd;
+    background-size: 600% 100%;
+    background-repeat: no-repeat;
+    animation: scanner 10s linear infinite;
+    -webkit-mask: url("/images/brand.svg") no-repeat center;
+    mask: url("/images/brand.svg") no-repeat center;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}

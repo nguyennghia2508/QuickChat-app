@@ -1,0 +1,34 @@
+/* CSS */
+#index {
+    width: 90px;
+    height: 90px;
+    background-color: #0176ff;
+    -webkit-mask: url("/images/brand.svg") no-repeat center;
+    mask: url("/images/brand.svg") no-repeat center;
+}
+
+ul.nav.navbar-nav {
+
+    @media (max-width: 575px) {
+        margin: 0 20px 0 20px
+    }
+
+    @media (min-width: 575px) and (max-width: 992px) {
+        margin: 0 50px 0 50px
+    }
+
+    @media (min-width: 1024px) {
+        margin: 0 60px 0 60px
+    }
+
+    @media (max-width: 1025px) {
+        justify-content: space-between;
+    }
+}
+
+nav.sideBar-avt {
+    @media (max-width:1025px) {
+        display: none;
+        ;
+    }
+}

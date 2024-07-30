@@ -1,0 +1,20 @@
+.chat-body {
+    position: relative; /* Tạo ngữ cảnh định vị cho .dropzone-file-input */
+}
+
+.dropzone-previews-js {
+    position: relative;
+    height: 105px;
+}
+
+.dropzone-file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    .dropzone-item{
+        margin: 15px;
+    }
+}
+
