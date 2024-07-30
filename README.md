@@ -102,7 +102,3 @@ git push origin <YOUR_BRANCH_NAME>
 ```
 
 5. View the changes in your fork and create a pull request.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
