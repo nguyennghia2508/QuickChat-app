@@ -21,7 +21,9 @@ const SideBar = ({
             {/* Sidebar */}
             <div className="sidebar">
                 <div className="tab-content h-100" role="tablist">
-                    <ChatTab title={title} children={children} users={users} createGroup={createGroup} />
+                    <ChatTab title={title} users={users} createGroup={createGroup}>
+                        {children}
+                    </ChatTab>
                 </div>
             </div>
             {/* Sidebar */}
