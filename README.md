@@ -1,7 +1,5 @@
 # QuickChat Application
 
-![QuickChat Application]
-
 QuickChat Application is a modern chat application built with the latest technologies, including Next.js, TypeScript, Tailwind CSS, MongoDB, Prisma, and NextAuth. It features real-time chatting, group creation, profile customization, online status tracking, image uploads, and various authentication methods, including email and social logins with Github, Google, and Twitter. This README will provide comprehensive documentation for setting up, running, and customizing the application.
 
 ## Demo
