@@ -12,7 +12,7 @@ import SessionProviderClientComponent from "./components/SessionProviderComponen
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'QuickChat - The Fastest Chat Experience',
+  title: 'QuickChat - The Fastest Chat App',
   description:
     'Nexus is a revolutionary chat application that transcends traditional messaging. Immerse yourself in rich, dynamic conversations, collaborate effortlessly, and forge meaningful connections with friends and colleagues. Join Nexus today and experience a new era of communication.',
 };
