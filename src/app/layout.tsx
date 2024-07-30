@@ -30,6 +30,7 @@ export default async function RootLayout({
       <head>
         {/* <link href="/css/template.min.css" rel="stylesheet"/> */}
         <link href="/css/template.dark.min.css" rel="stylesheet" media="(prefers-color-scheme: dark)" />
+        <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
       </head>
       <body>
         <AuthContext>
