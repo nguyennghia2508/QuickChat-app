@@ -25,6 +25,16 @@
     mask: url("/images/brand.svg") no-repeat center;
 }
 
+@keyframes scanner {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: 0 100%;
+    }
+}
+
 @keyframes gradient {
     0% {
         background-position: 0% 50%;
