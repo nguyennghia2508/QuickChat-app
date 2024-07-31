@@ -10,7 +10,7 @@ View the live demo at [QuickChat Application Demo](https://quickchat-app-iota.ve
 
 - **Real-Time Chatting**: Enjoy real-time chat with other users.
 - **Group Creation**: Create chat groups for multiple users.
-- **Profile Customization**: Update your name and profile picture.
+- **Profile Customization**: Update your name and profile picture,Dark Mode.
 - **Online Status**: See live active/offline status for users.
 - **Image Uploads**: Share images in chats using Cloudinary.
 - **Multiple Authentication Methods**: Sign in or sign up using email, Github, Google, and Twitter.
@@ -20,6 +20,7 @@ View the live demo at [QuickChat Application Demo](https://quickchat-app-iota.ve
 - **Next.js**: A popular React framework for building web applications.
 - **TypeScript**: A statically typed superset of JavaScript.
 - **Tailwind CSS**: A utility-first CSS framework for designing modern and responsive UIs.
+- **Bootstrap**: A CSS framework for building responsive and mobile-first websites.
 - **Headless UI**: A set of completely unstyled, fully accessible UI components for React.
 - **React**: A JavaScript library for building user interfaces.
 - **Prisma**: A modern database toolkit for TypeScript and Node.js.
