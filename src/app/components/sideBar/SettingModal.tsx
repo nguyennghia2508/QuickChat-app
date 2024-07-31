@@ -191,6 +191,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                                 <Controller
                                     name="darkMode"
                                     control={control}
+                                    defaultValue={session?.darkMode}
                                     render={({ field: { onChange, value } }) => (
                                         <MaterialUISwitch sx={{ m: 1 }}
                                             className='mx-0'

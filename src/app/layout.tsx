@@ -9,7 +9,6 @@ import dynamic from "next/dynamic";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./libs/configs/auth/authOptions";
 import SessionProviderClientComponent from "./components/SessionProviderComponent";
-import DarkModeStyles from "./components/DarkModeStyles";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,15 +28,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
+        {session?.darkMode ? <link href="/css/template.dark.min.css" rel="stylesheet" media="(prefers-color-scheme: dark)" /> : <link href="/css/template.min.css" rel="stylesheet" />}
         <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
       </head>
       <body>
         <AuthContext>
           <ToasterContext />
           <ActiveStatus />
-          {session && session.darkMode !== undefined && (
-            <DarkModeStyles darkMode={session.darkMode} />
-          )}
           {children}
           {/* </SessionProviderClientComponent> */}
         </AuthContext>
