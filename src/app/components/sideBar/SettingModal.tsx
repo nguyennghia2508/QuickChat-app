@@ -30,6 +30,16 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
     const { data: session, status, update } = useSession();
     const [isLoading, setIsLoading] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
+    const [darkModeFromLocalStorage, setDarkModeFromLocalStorage] = useState(false);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const getUserfromLocalStorage = localStorage.getItem("darkMode");
+            if (getUserfromLocalStorage !== undefined) {
+                setDarkModeFromLocalStorage(getUserfromLocalStorage && JSON.parse(getUserfromLocalStorage));
+            }
+        }
+    }, []);
 
     useEffect(() => {
         if (isOpen) {
@@ -49,7 +59,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
         defaultValues: {
             name: currentUser?.name,
             image: currentUser?.image,
-            darkMode: session?.darkMode,
+            darkMode: darkModeFromLocalStorage ? darkModeFromLocalStorage : session?.darkMode,
         },
     });
 
@@ -147,7 +157,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                     darkMode: data?.darkMode
                 };
                 await update(newSession);
-
+                localStorage.setItem('darkMode', data?.darkMode);
                 toast.success('Profile updated successfully.');
                 router.refresh();
                 onClose();

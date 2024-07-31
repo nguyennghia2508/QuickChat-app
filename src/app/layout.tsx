@@ -6,9 +6,9 @@ import { AuthContext, ToasterContext } from './context'
 import 'react-toastify/dist/ReactToastify.css';
 import "./globals.css";
 import dynamic from "next/dynamic";
+import ThemeSwitcher from "./components/ThemeSwitcher";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./libs/configs/auth/authOptions";
-import SessionProviderClientComponent from "./components/SessionProviderComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,10 +25,13 @@ export default async function RootLayout({
 }>) {
 
   const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <head>
-        {session?.darkMode ? <link href="/css/template.dark.min.css" rel="stylesheet" media="(prefers-color-scheme: dark)" /> : <link href="/css/template.min.css" rel="stylesheet" />}
+        <AuthContext>
+          <ThemeSwitcher session={session} />
+        </AuthContext>
         <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
       </head>
       <body>

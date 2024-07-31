@@ -79,7 +79,7 @@ export const authOptions: AuthOptions = {
                 }
 
                 session.user.id = user.id
-                session.darkMode = token.darkMode !== undefined ? token.darkMode : true;
+                session.darkMode = token.darkMode ?? true
                 return session
             }
         },
