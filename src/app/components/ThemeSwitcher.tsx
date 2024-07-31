@@ -16,14 +16,14 @@ const ThemeSwitcher: React.FC<ThemeProps> = ({
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const darkModeFromLocalStorage = window.localStorage.getItem("darkMode");
-            if (darkModeFromLocalStorage) {
+            if (darkModeFromLocalStorage !== null) {
                 setDarkMode(darkModeFromLocalStorage && JSON.parse(darkModeFromLocalStorage));
             }
             else {
-                setDarkMode(session?.darkMode);
+                setDarkMode(true);
             }
         }
-    }, [session?.darkMode]);
+    }, [session]);
 
     return (
         <>
