@@ -4,6 +4,8 @@ import { User } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 import GroupChatModal from '../../GroupChatModal';
 import { HiOutlineUserGroup } from 'react-icons/hi2';
+import SettingsModal from '../../sideBar/SettingModal';
+import Avatar from '../../Avatar';
 // import { setChatTabState } from "@/app/store/features/chatTabSlice";
 // import { useAppDispatch } from "@/app/store";
 
@@ -12,14 +14,17 @@ const ChatTab = ({
     children,
     users,
     createGroup,
+    currentUser,
 }: {
     title: String;
     children: React.ReactNode;
     users: User[];
     createGroup: Boolean;
+    currentUser: User | null;
 }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isOpenProfile, setIsOpenProfile] = useState(false);
 
     return (
         <>
@@ -56,7 +61,21 @@ const ChatTab = ({
 
                             )
                                 :
-                                <h2 className="font-bold mb-6">{title}</h2>
+                                <div className='d-flex flex-row justify-between'>
+                                    <SettingsModal
+                                        currentUser={currentUser!}
+                                        isOpen={isOpenProfile}
+                                        onClose={() => setIsOpenProfile(false)}
+                                    />
+                                    <h2 className="font-bold mb-6">{title}</h2>
+                                    <div
+                                        onClick={() => setIsOpenProfile(true)}
+                                        className="d-xl-none cursor-pointer hover:opacity-75 transition"
+                                        title="Edit profile"
+                                    >
+                                        <Avatar user={currentUser!} />
+                                    </div>
+                                </div>
                             }
                             {/* Search */}
                             <form className="mb-6">

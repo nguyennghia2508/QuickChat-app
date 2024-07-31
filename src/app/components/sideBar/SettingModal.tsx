@@ -1,9 +1,11 @@
 'use client';
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch, { SwitchProps } from '@mui/material/Switch';
 import { User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { CldUploadButton } from 'next-cloudinary';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -25,12 +27,21 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
     onClose,
 }) => {
     const router = useRouter();
+    const { data: session, status, update } = useSession();
     const [isLoading, setIsLoading] = useState(false);
+    const [isClosing, setIsClosing] = useState(false);
+
+    useEffect(() => {
+        if (isOpen) {
+            setIsClosing(false);
+        }
+    }, [isOpen]);
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        control,
         reset,
         setValue,
         watch,
@@ -38,11 +49,58 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
         defaultValues: {
             name: currentUser?.name,
             image: currentUser?.image,
+            darkMode: session?.darkMode,
         },
     });
 
     const image = watch('image');
-    const { data: session, status, update } = useSession();
+
+    const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+        width: 62,
+        height: 34,
+        padding: 7,
+        '& .MuiSwitch-switchBase': {
+            margin: 1,
+            padding: 0,
+            transform: 'translateX(6px)',
+            '&.Mui-checked': {
+                color: '#fff',
+                transform: 'translateX(22px)',
+                '& .MuiSwitch-thumb:before': {
+                    backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+                        '#fff',
+                    )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
+                },
+                '& + .MuiSwitch-track': {
+                    opacity: 1,
+                    backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+                },
+            },
+        },
+        '& .MuiSwitch-thumb': {
+            backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
+            width: 32,
+            height: 32,
+            '&::before': {
+                content: "''",
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                left: 0,
+                top: 0,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+                    '#fff',
+                )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
+            },
+        },
+        '& .MuiSwitch-track': {
+            opacity: 1,
+            backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+            borderRadius: 20 / 2,
+        },
+    }));
 
     const handleUpload = (result: any) => {
         const fileInfo = result?.info;
@@ -70,41 +128,43 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         if (data.name === "") {
-            toast.error("Please enter your name")
-            return
+            toast.error("Please enter your name");
+            return;
         }
-        else {
-            setIsLoading(true);
-
-            axios
-                .post('/api/settings', data)
-                .then(async () => {
-                    const newSession = {
-                        user: {
-                            ...session?.user,
-                            name: data?.name,
-                            image: data?.image
-                        },
-                    };
-                    await update(newSession);
-
-                    toast.success('Change image success.');
-                    router.refresh();
-                    onClose();
-                })
-                .catch(() => toast.error('Something went wrong!'))
-                .finally(() => setIsLoading(false));
+        if (isClosing) {
+            return;
         }
+        setIsLoading(true);
+        axios
+            .post('/api/settings', data)
+            .then(async () => {
+                const newSession = {
+                    user: {
+                        ...session?.user,
+                        name: data?.name,
+                        image: data?.image
+                    },
+                    darkMode: data?.darkMode
+                };
+                await update(newSession);
+
+                toast.success('Profile updated successfully.');
+                router.refresh();
+                onClose();
+            })
+            .catch(() => toast.error('Something went wrong!'))
+            .finally(() => setIsLoading(false));
     };
 
     const handleClose = () => {
-        onClose()
-        reset()
+        setIsClosing(true);
+        onClose();
+        reset();
     };
 
     return (
         <Modal isOpen={isOpen} onClose={handleClose}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className='modal-setting'>
                 <div className="space-y-12">
                     <div className="border-b border-gray-900/10 pb-12">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -124,7 +184,24 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                                 register={register}
                                 required
                             />
-
+                            <div>
+                                <label className="block text-sm font-medium leading-6 text-gray-900">
+                                    Dark mode
+                                </label>
+                                <Controller
+                                    name="darkMode"
+                                    control={control}
+                                    render={({ field: { onChange, value } }) => (
+                                        <MaterialUISwitch sx={{ m: 1 }}
+                                            className='mx-0'
+                                            checked={value}
+                                            onChange={(e) => {
+                                                onChange(e.target.checked)
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </div>
                             <div>
                                 <label className="block text-sm font-medium leading-6 text-gray-900">
                                     Photo
@@ -152,7 +229,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                     </div>
 
                     <div className="mt-6 flex items-center justify-end gap-x-6">
-                        <Button disabled={isLoading} onClick={onClose} secondary>
+                        <Button disabled={isLoading} onClick={handleClose} secondary>
                             Cancel
                         </Button>
                         <Button disabled={isLoading} type="submit">

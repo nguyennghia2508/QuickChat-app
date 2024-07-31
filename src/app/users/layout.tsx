@@ -21,7 +21,7 @@ export default async function UsersLayout({
     return (
         <div className="layout">
             <NavBar user={currentUser!} />
-            <SideBar title={"People"} users={users} createGroup={false}>
+            <SideBar title={"People"} currentUser={currentUser} users={users} createGroup={false}>
                 <UserLists
                     items={users}
                 />

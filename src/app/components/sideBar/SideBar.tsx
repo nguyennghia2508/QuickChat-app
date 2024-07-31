@@ -10,18 +10,20 @@ const SideBar = ({
     children,
     users,
     createGroup,
+    currentUser,
 }: {
     title: String;
     children: React.ReactNode;
     users: User[];
     createGroup: Boolean;
+    currentUser: User | null;
 }) => {
     return (
         <>
             {/* Sidebar */}
             <div className="sidebar">
                 <div className="tab-content h-100" role="tablist">
-                    <ChatTab title={title} users={users} createGroup={createGroup}>
+                    <ChatTab title={title} currentUser={currentUser} users={users} createGroup={createGroup}>
                         {children}
                     </ChatTab>
                 </div>

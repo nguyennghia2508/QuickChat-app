@@ -15,6 +15,12 @@
     }
 }
 
+.modal-setting {
+    @media (max-width: 575px) {
+        max-height: 50vh !important;
+    }
+}
+
 .fade-in {
     opacity: 0;
     /* Ensure starting state is transparent */

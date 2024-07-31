@@ -7,7 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import "./globals.css";
 import dynamic from "next/dynamic";
 import { getServerSession } from "next-auth";
+import { authOptions } from "./libs/configs/auth/authOptions";
 import SessionProviderClientComponent from "./components/SessionProviderComponent";
+import DarkModeStyles from "./components/DarkModeStyles";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,19 +25,19 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const session = await getServerSession();
-
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <head>
-        {/* <link href="/css/template.min.css" rel="stylesheet"/> */}
-        <link href="/css/template.dark.min.css" rel="stylesheet" media="(prefers-color-scheme: dark)" />
         <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
       </head>
       <body>
         <AuthContext>
           <ToasterContext />
           <ActiveStatus />
+          {session && session.darkMode !== undefined && (
+            <DarkModeStyles darkMode={session.darkMode} />
+          )}
           {children}
           {/* </SessionProviderClientComponent> */}
         </AuthContext>

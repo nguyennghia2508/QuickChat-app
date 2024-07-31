@@ -12,9 +12,9 @@ declare module 'next-auth' {
         user: {
             id: string;
         } & DefaultSession['user'];
+        darkMode: boolean;
     }
 }
-
 export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
@@ -79,6 +79,7 @@ export const authOptions: AuthOptions = {
                 }
 
                 session.user.id = user.id
+                session.darkMode = token.darkMode !== undefined ? token.darkMode : true;
                 return session
             }
         },
@@ -88,6 +89,10 @@ export const authOptions: AuthOptions = {
             }
             if (trigger === 'update' && session?.user.image) {
                 token.picture = session?.user.image;
+            }
+
+            if (trigger === 'update' && session?.darkMode !== undefined) {
+                token.darkMode = session?.darkMode;
             }
 
             return token

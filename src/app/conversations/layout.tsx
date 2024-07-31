@@ -24,7 +24,7 @@ export default async function ConversationsLayout({
     return (
         <div className="layout">
             <NavBar user={currentUser!} />
-            <SideBar title={"Chats"} users={users} createGroup={true}>
+            <SideBar title={"Chats"} currentUser={currentUser} users={users} createGroup={true}>
                 <ConversationList
                     users={users}
                     initialItems={conversations}
